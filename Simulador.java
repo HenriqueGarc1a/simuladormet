@@ -4,13 +4,13 @@ import java.util.Random;
 public class Simulador {
     
         private Escalonador escalonador;
-        private int size,fila,cmax,cmin,smax,smin,ids,maxale,ale = 0,perdidos = 0;
+        private int size,fila,cmax,cmin,smax,smin,ids,maxale,ale = 0,perdidos = 0,servers;
         private double tempo;
         private Evento atual;
         private ArrayList<Double>  prob = new ArrayList<>();
 
 
-        public Simulador(int size,int cmin,int cmax,int smin,int smax,double first,int maxale){
+        public Simulador(int size,int cmin,int cmax,int smin,int smax,double first,int maxale,int servers){
 
             this.size = size;
             this.fila = 0;
@@ -24,6 +24,7 @@ public class Simulador {
             this.ids++;
             this.maxale = maxale;
             this.tempo = 0;
+            this.servers = servers;
 
         }
 
@@ -86,7 +87,7 @@ public class Simulador {
 
                 fila++;
 
-                if(fila <=1){
+                if(fila <=servers){
                     escalonador.add(new Evento(2, this.getTempoSaida(), ids));
                     ids++;
                 }
@@ -108,7 +109,7 @@ public class Simulador {
 
             fila--;
 
-            if(fila >= 1){
+            if(fila >= servers){
 
                 escalonador.add(new Evento(2, this.getTempoSaida(), ids));
                 ids++;
